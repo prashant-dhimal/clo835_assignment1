@@ -5,6 +5,9 @@ provider "aws" {
 resource "aws_ecr_repository" "clo_835_week1" {
   name = "assignment1_repo"
 }
+resource "aws_ecr_repository" "clo_835" {
+  name = "assignment1_repo_db"
+}
 # Adding SSH key to Amazon EC2
 resource "aws_key_pair" "my_key" {
   key_name   = "assignment_key"
@@ -54,7 +57,14 @@ resource "aws_instance" "assignment_instance" {
   vpc_security_group_ids      = [aws_security_group.alb_sg.id]
   subnet_id                   = aws_subnet.clo835_subnet[0].id
   key_name                    = aws_key_pair.my_key.key_name
+  user_data = <<EOF
+  #!/bin/bash
 
+  sudo yum update -y
+  sudo yum install -y docker
+  sudo usermod -aG docker ec2-user
+  sudo service docker restart
+  EOF 
   tags = {
     Name = "Assignment_1_Instance"
   }

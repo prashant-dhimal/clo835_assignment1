@@ -20,8 +20,8 @@ resource "aws_alb_target_group_attachment" "target_one" {
   target_group_arn = aws_alb_target_group.p8081.arn
   target_id        = aws_instance.assignment_instance.id
   port             = 8081
-  
-  
+
+
 }
 
 resource "aws_alb_target_group" "p8082" {
@@ -36,8 +36,8 @@ resource "aws_alb_target_group_attachment" "target_two" {
   target_group_arn = aws_alb_target_group.p8082.arn
   target_id        = aws_instance.assignment_instance.id
   port             = 8082
-  
-  
+
+
 }
 resource "aws_alb_target_group" "p8083" {
   name        = "lime-color"
@@ -58,7 +58,7 @@ resource "aws_security_group" "alb_sg" {
   name        = "alb_sg"
   description = "Allow HTTP Traffic"
   vpc_id      = aws_vpc.clo835_vpc.id
-  
+
   ingress {
     from_port   = 22
     to_port     = 22
@@ -71,24 +71,24 @@ resource "aws_security_group" "alb_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
- ingress {
+  ingress {
     from_port   = 8081
     to_port     = 8081
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  } 
-ingress {
+  }
+  ingress {
     from_port   = 8082
     to_port     = 8082
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-ingress {
+  ingress {
     from_port   = 8083
     to_port     = 8083
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }  
+  }
 }
 /*resource "aws_alb_listener" "app_alb_listener" {
   load_balancer_arn = aws_alb.assignment1_alb.arn
@@ -135,55 +135,55 @@ resource "aws_alb_listener" "app_alb_listener" {
   port              = "80"
   default_action {
     type = "forward"
-    
+
     forward {
       target_group {
         arn    = aws_alb_target_group.p8081.arn
         weight = 1
       }
-     target_group {
+      target_group {
         arn    = aws_alb_target_group.p8082.arn
         weight = 1
       }
-     target_group {
+      target_group {
         arn    = aws_alb_target_group.p8083.arn
         weight = 1
-      }  
-    #target_group_arn = aws_alb_target_group.p8081.arn
-    #type             = "forward"
-    #priority         =1
-    
-  }
-  }
-  }
+      }
+      #target_group_arn = aws_alb_target_group.p8081.arn
+      #type             = "forward"
+      #priority         =1
 
- # default_action {
-  #  target_group_arn = aws_alb_target_group.p8082.arn
-   # type             = "forward"
-   # priority         = 1
-  #}
+    }
+  }
+}
+
+# default_action {
+#  target_group_arn = aws_alb_target_group.p8082.arn
+# type             = "forward"
+# priority         = 1
+#}
 
 #default_action {
- #   target_group_arn = aws_alb_target_group.p8083.arn
-  #  type             = "forward"
-   # priority         = 1
-  #}
+#   target_group_arn = aws_alb_target_group.p8083.arn
+#  type             = "forward"
+# priority         = 1
+#}
 #}  
 
 
 #resource "aws_alb_listener_rule" "app_alb_listener_rule" {
- # count        = length(local.rules)
-  #listener_arn = aws_alb_listener.app_alb_listener.arn
-  #priority     = count.index + 1
-  #action {
-  #  type             = "forward"
-  #  target_group_arn = local.rules[count.index].target_group_arn
-  #}
-  #condition {
-  #  path_pattern {
-  #    values = local.rules[count.index].path_pattern
-  #  }
-  #}
+# count        = length(local.rules)
+#listener_arn = aws_alb_listener.app_alb_listener.arn
+#priority     = count.index + 1
+#action {
+#  type             = "forward"
+#  target_group_arn = local.rules[count.index].target_group_arn
+#}
+#condition {
+#  path_pattern {
+#    values = local.rules[count.index].path_pattern
+#  }
+#}
 #}
 
 

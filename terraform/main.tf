@@ -57,7 +57,7 @@ resource "aws_instance" "assignment_instance" {
   vpc_security_group_ids      = [aws_security_group.alb_sg.id]
   subnet_id                   = aws_subnet.clo835_subnet[0].id
   key_name                    = aws_key_pair.my_key.key_name
-  user_data = <<EOF
+  user_data                   = <<EOF
   #!/bin/bash
 
   sudo yum update -y
